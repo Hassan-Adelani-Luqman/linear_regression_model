@@ -34,6 +34,7 @@ app.add_middleware(
         "http://localhost:8080",
         "http://localhost:8100",
         "http://127.0.0.1:8000",
+        "https://life-expectancy-api-frsw.onrender.com",
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"],
@@ -238,15 +239,17 @@ def retrain(payload: RetrainInput):
         X_scaled  = scaler.transform(X_imputed)
         y         = np.array(payload.targets)
 
-        # Re-fit with same hyperparameters as Task 1 best model
+        # Re-fit — clamp split/leaf params to dataset size so small
+        # payloads don't crash (sklearn raises if min_samples > n_samples)
         from sklearn.ensemble import RandomForestRegressor as RFR
         from sklearn.metrics  import mean_squared_error, r2_score
 
+        n = len(y)
         new_model = RFR(
             n_estimators=300,
             max_depth=15,
-            min_samples_split=5,
-            min_samples_leaf=2,
+            min_samples_split=min(5, max(2, n)),
+            min_samples_leaf=min(2, max(1, n // 2)),
             random_state=42,
             n_jobs=-1,
         )
