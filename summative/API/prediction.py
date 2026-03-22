@@ -261,12 +261,15 @@ def retrain(payload: RetrainInput):
         model = new_model
 
         # Report fit quality on the training batch
-        y_pred = new_model.predict(X_scaled)
+        # r2_score returns NaN when n=1 (SS_tot=0); replace with 1.0 (perfect fit)
+        y_pred  = new_model.predict(X_scaled)
+        r2      = r2_score(y, y_pred)
+        r2_safe = 1.0 if (r2 != r2) else round(float(r2), 4)   # NaN check
         return {
             "status"         : "retrained",
             "rows_used"      : len(y),
             "train_mse"      : round(float(mean_squared_error(y, y_pred)), 4),
-            "train_r2"       : round(float(r2_score(y, y_pred)), 4),
+            "train_r2"       : r2_safe,
             "model_saved_to" : model_path,
         }
 
