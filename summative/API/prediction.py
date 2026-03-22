@@ -251,7 +251,7 @@ def retrain(payload: RetrainInput):
             min_samples_split=min(5, max(2, n)),
             min_samples_leaf=min(2, max(1, n // 2)),
             random_state=42,
-            n_jobs=-1,
+            n_jobs=1,
         )
         new_model.fit(X_scaled, y)
 
