@@ -205,17 +205,10 @@ def predict(input_data: PredictionInput):
     """
     try:
         X = input_to_array(input_data)
-        raw_pred = model.predict(X)
-        prediction = float(raw_pred[0])
+        prediction = float(model.predict(X)[0])
         return {
             "predicted_life_expectancy_years": round(prediction, 2),
             "model": type(model).__name__,
-            "_debug": {
-                "raw_pred": float(raw_pred[0]),
-                "X_shape": list(X.shape),
-                "X_sample": [round(float(v), 4) for v in X[0][:5]],
-                "n_estimators": getattr(model, "n_estimators", "?"),
-            },
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
