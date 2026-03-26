@@ -41,6 +41,13 @@ app.add_middleware(
     allow_headers=["Content-Type", "Authorization", "Accept"],
 )
 
+# ── Columns log1p-transformed during training (skewness > 1.0 after imputation) ─
+# Determined by notebook Cell 3.6: skew_series[skew_series > 1.0].index.tolist()
+LOG_COLS = [
+    "Population", "infant deaths", "Measles",
+    "HIV/AIDS", "GDP", "thinness 1-19 years", "Adult Mortality",
+]
+
 # ── Field name map: Pydantic identifier → exact feature_columns name ──────────
 FIELD_MAP = {
     "Status"              : "Status",
@@ -170,6 +177,9 @@ def input_to_array(item: PredictionInput) -> pd.DataFrame:
     df_imputed = pd.DataFrame(
         imputer.transform(df), columns=feature_columns
     )
+    # Mirror the training pipeline: log1p-transform skewed features before scaling
+    for col in LOG_COLS:
+        df_imputed[col] = np.log1p(df_imputed[col])
     df_scaled  = scaler.transform(df_imputed)
     return df_scaled
 
