@@ -408,9 +408,11 @@ class _PredictionPageState extends State<PredictionPage> {
             ),
           ),
           const SizedBox(height: 4),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Row(children: [
             const Text('40 yrs', style: TextStyle(color: Colors.white54, fontSize: 9.5)),
-            Text(subtitle, style: const TextStyle(color: Colors.white70, fontSize: 10.5)),
+            Expanded(child: Text(subtitle,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.white70, fontSize: 10.5))),
             const Text('90 yrs', style: TextStyle(color: Colors.white54, fontSize: 9.5)),
           ]),
         ])),

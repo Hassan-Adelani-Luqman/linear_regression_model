@@ -26,9 +26,9 @@ Predicting life expectancy in African nations using healthcare, immunization, an
 
 | Model | Test MSE | Test R² |
 |-------|----------|---------|
-| Linear Regression (OLS + SGD) | 14.02 | 0.839 |
-| Decision Tree (CV-tuned depth) | 6.16 | 0.929 |
-| **Random Forest (300 trees)** | **3.03** | **0.965** |
+| Linear Regression (OLS + SGD) | 14.0209 | 0.8379 |
+| Decision Tree (CV-tuned depth) | 6.1621 | 0.9288 |
+| **Random Forest (300 trees)** | **3.0341** | **0.9649** |
 
 - Best model (Random Forest) saved as `best_model.pkl` → used by the API
 
@@ -91,7 +91,10 @@ flutter run
 ---
 
 ## Video Demo
-*Coming soon*
+
+[![Watch the demo](https://img.shields.io/badge/YouTube-Watch%20Demo-red?logo=youtube)](https://www.youtube.com/watch?v=CY8MKWnK9S4&feature=youtu.be)
+
+[https://www.youtube.com/watch?v=CY8MKWnK9S4&feature=youtu.be](https://www.youtube.com/watch?v=CY8MKWnK9S4&feature=youtu.be)
 
 ---
 
